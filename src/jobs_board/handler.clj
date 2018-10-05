@@ -48,7 +48,6 @@
             (throw ex)))))))
 
 (defroutes app-routes
-  (GET "/" [] {:body {:message "Hello World"}})
   (GET "/jobs" [] get-jobs)
   (POST "/jobs" [] post-job)
   (DELETE "/jobs/:id" [id] delete-job)

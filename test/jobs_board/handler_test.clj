@@ -4,10 +4,10 @@
             [jobs-board.handler :refer :all]))
 
 (deftest test-app
-  (testing "main route"
-    (let [response (app (mock/request :get "/"))]
+  (testing "/jobs route"
+    (let [response (app (mock/request :get "/jobs"))]
       (is (= (:status response) 200))
-      (is (= (:body response) "Hello World"))))
+      (is (= (:body response) "{}"))))
 
   (testing "not-found route"
     (let [response (app (mock/request :get "/invalid"))]
