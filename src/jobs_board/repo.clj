@@ -18,7 +18,7 @@
   (get-all [this]
     @records)
   (create! [this record]
-    (let [id (java.util.UUID/randomUUID)
+    (let [id (str (java.util.UUID/randomUUID))
           r  (select-keys record [:company :title :description])]
       (swap! records assoc id (assoc r :id id))))
   (delete! [this id]

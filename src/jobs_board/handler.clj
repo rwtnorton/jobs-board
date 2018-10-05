@@ -30,15 +30,32 @@
        :body   {:error (str "Required attributes: "
                             (str/join ", " (map name repo/required-keys)))}})))
 
+(defn delete-job
+  [{:keys [params jobs] :as request}]
+  (let [{:keys [id]} params]
+    (if-not id
+      {:status 400
+       :body   {:error "Missing :id param"}}
+      (try
+        (repo/delete! jobs id)
+        {:status 200
+         :body   (repo/get-all jobs)}
+        (catch clojure.lang.ExceptionInfo ex
+          (if (:id (ex-data ex))
+            {:status 404
+             :body   {:error "No such job"
+                      :id    id}}
+            (throw ex)))))))
+
 (defroutes app-routes
   (GET "/" [] {:body {:message "Hello World"}})
   (GET "/jobs" [] get-jobs)
   (POST "/jobs" [] post-job)
+  (DELETE "/jobs/:id" [id] delete-job)
   (route/not-found "Not Found"))
 
 (def app
   (-> app-routes
-      (wrap-jobs-repo (repo/new-in-mem-jobs-repo {:foo {:id :foo}
-                                                  :bar {:id :bar}}))
+      (wrap-jobs-repo (repo/new-in-mem-jobs-repo))
       wrap-json-response
       wrap-json-body))
