@@ -7,7 +7,8 @@
                  [ring/ring-defaults "0.3.2"]
                  [ring/ring-core "1.6.3"]
                  [ring/ring-jetty-adapter "1.6.3"]
-                 [ring/ring-json "0.4.0"]]
+                 [ring/ring-json "0.4.0"]
+                 [cheshire "5.8.1"]]
   :plugins [[lein-ring "0.12.4"]]
   :ring {:handler jobs-board.handler/app}
   :profiles
