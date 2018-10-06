@@ -12,7 +12,6 @@
   [m]
   (set/subset? required-keys (set (keys m))))
 
-
 (defrecord InMemJobsRepo [records]
   Repo
   (get-all [this]
